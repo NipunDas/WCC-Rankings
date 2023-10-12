@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/WCC-Rankings/static/css/main.c01f4445.css",
+    "main.js": "/WCC-Rankings/static/js/main.711f608f.js",
+    "index.html": "/WCC-Rankings/index.html",
+    "main.c01f4445.css.map": "/WCC-Rankings/static/css/main.c01f4445.css.map",
+    "main.711f608f.js.map": "/WCC-Rankings/static/js/main.711f608f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c01f4445.css",
+    "static/js/main.711f608f.js"
+  ]
+}
