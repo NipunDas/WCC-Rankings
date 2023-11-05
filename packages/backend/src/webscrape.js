@@ -2,18 +2,14 @@ import puppeteer from "puppeteer";
 import moment from "moment";
 import esMain from "es-main";
 
+const api_url = "https://cubingusa.org/async/state_rankings";
+
+// Browser and page for webscraping
+const browser = await puppeteer.launch({headless: "new"})
+const page = await browser.newPage();
+
+/* Function to get the top 100 in a region for any particular event */
 async function getRegionTop100(eventId, useAverage) {
-    const api_url = "https://cubingusa.org/async/state_rankings";
-
-    // headless = false so we can see the webpage
-    // defaultViewport = null: no default viewport so 
-    const browser = await puppeteer.launch({
-        headless: "new"
-    });
-
-    // opening a new page
-    const page = await browser.newPage();
-
     const getStateTop100 = async (stateId) => {
         await page.goto(`${api_url}/${eventId}/${stateId}/${useAverage}`, {
             waitUntil: "domcontentloaded"
@@ -74,13 +70,13 @@ async function getRegionTop100(eventId, useAverage) {
         let entry = [x + 1];
 
         if (cali_time < nevada_time && cali_time < hawaii_time) {
-            entry.push(cali_array[i].person, cali_array[i].time);
+            entry.push(cali_array[i].person, cali_array[i].time, "California");
             i++;
         } else if (nevada_time < hawaii_time) {
-            entry.push(nevada_array[j].person, nevada_array[j].time);
+            entry.push(nevada_array[j].person, nevada_array[j].time, "Nevada");
             j++;
         } else {
-            entry.push(hawaii_array[k].person, hawaii_array[k].time);
+            entry.push(hawaii_array[k].person, hawaii_array[k].time, "Hawaii");
             k++;
         }
 
@@ -91,12 +87,14 @@ async function getRegionTop100(eventId, useAverage) {
         region_array.push(entry);
     }
 
-    // closing the browser
-    await browser.close();
-
     // return array of rankings for west coast region
     return region_array;
 };
+
+// closing the browser
+async function closeBrowser() {
+    await browser.close();
+}
 
 function getTimeFromString(str) {
     let time = moment(str, "s.SS");
@@ -108,6 +106,7 @@ if (esMain(import.meta)) {
     getRegionTop100("333", "0").then((result) => {
         console.log(result);
     });
+    await closeBrowser();
 }
 
-export default getRegionTop100;
+export default {getRegionTop100, closeBrowser};

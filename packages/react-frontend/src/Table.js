@@ -7,6 +7,7 @@ function TableHeader() {
                     <th>Rank</th>
                     <th>Name</th>
                     <th>Time</th>
+                    <th>State</th>
                 </tr>
         </thead>
     );
@@ -19,6 +20,7 @@ function TableBody(props) {
                     <td>{row[0]}</td>
                     <td>{row[1]}</td>
                     <td>{row[2]}</td>
+                    <td>{row[3]}</td>
                 </tr>
             );
         }
