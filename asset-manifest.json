@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/WCC-Rankings/static/css/main.42d39201.css",
-    "main.js": "/WCC-Rankings/static/js/main.ea382da5.js",
+    "main.js": "/WCC-Rankings/static/js/main.c9763db8.js",
     "index.html": "/WCC-Rankings/index.html",
     "main.42d39201.css.map": "/WCC-Rankings/static/css/main.42d39201.css.map",
-    "main.ea382da5.js.map": "/WCC-Rankings/static/js/main.ea382da5.js.map"
+    "main.c9763db8.js.map": "/WCC-Rankings/static/js/main.c9763db8.js.map"
   },
   "entrypoints": [
     "static/css/main.42d39201.css",
-    "static/js/main.ea382da5.js"
+    "static/js/main.c9763db8.js"
   ]
 }
