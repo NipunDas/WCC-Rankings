@@ -4,7 +4,7 @@ import Table from "./Table.js";
 
 const api_base_url = "https://sheets.googleapis.com";
 const spreadsheet_id = "1GFo7S0OJUK92RX4D-_0enm7umfCWVYT3TKrtb4YNUI4";
-const range = "333!A1:D100";
+const range = "333!A1:E100";
 
 function MyApp() {
 
