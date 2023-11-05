@@ -1,13 +1,8 @@
 import puppeteer from "puppeteer";
 import moment from "moment";
-import express from "express";
+import esMain from "es-main";
 
-const app = express();
-const port = 8000;
-
-app.use(express.text());
-
-const getRegionTop100 = async (eventId, useAverage) => {
+async function getRegionTop100(eventId, useAverage) {
     const api_url = "https://cubingusa.org/async/state_rankings";
 
     // headless = false so we can see the webpage
@@ -53,7 +48,7 @@ const getRegionTop100 = async (eventId, useAverage) => {
 
     // show top 100 people at most for rankings
     let total_people = Math.min(cali_array.length + nevada_array.length + hawaii_array.length, 100);
-    let i = 0, j = 0, k = 0, rank = 1, prev_time = NaN;
+    let i = 0, j = 0, k = 0;
 
     for (let x = 0; x < total_people; x++) {
         let cali_time, nevada_time, hawaii_time;
@@ -76,24 +71,25 @@ const getRegionTop100 = async (eventId, useAverage) => {
             hawaii_time = Infinity;
         }
 
+        let entry = [x + 1];
+
         if (cali_time < nevada_time && cali_time < hawaii_time) {
-            cali_array[i].rank = rank;
-            region_array.push(cali_array[i]);
+            entry.push(cali_array[i].person, cali_array[i].time);
             i++;
         } else if (nevada_time < hawaii_time) {
-            nevada_array[j].rank = rank;
-            region_array.push(nevada_array[j]);
+            entry.push(nevada_array[j].person, nevada_array[j].time);
             j++;
         } else {
-            hawaii_array[k].rank = rank;
-            region_array.push(hawaii_array[k]);
+            entry.push(hawaii_array[k].person, hawaii_array[k].time);
             k++;
         }
 
-        rank++;
-    }
+        if (x > 0 && entry[2] === region_array[x - 1][2]) {
+            entry[0] = region_array[x - 1][0];
+        }
 
-    console.log(region_array);
+        region_array.push(entry);
+    }
 
     // closing the browser
     await browser.close();
@@ -107,11 +103,11 @@ function getTimeFromString(str) {
     return time.seconds() + (time.millisecond()/1000);
 }
 
-app.get('/', (req, res) => {
-    getRegionTop100("333", "0")
-        .then((rankings) => res.send(rankings));
-});
+/* Only run this code if this module is called directly */
+if (esMain(import.meta)) {
+    getRegionTop100("333", "0").then((result) => {
+        console.log(result);
+    });
+}
 
-app.listen(port, () => {
-    console.log(`App listening on http://localhost:${port}`);
-});
+export default getRegionTop100;
