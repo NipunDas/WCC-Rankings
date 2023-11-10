@@ -19,34 +19,39 @@ const auth = await authenticate({
 
 google.options({auth});
 
-const rankings = await webscraper.getRegionTop100("333", "0");
+const events = ["333", "222", "444", "555", "666", "777", "333bf", "333fm",
+    "333oh", "clock", "minx", "pyram", "skewb", "sq1", "444bf", "555bf", "333mbf"];
 
-sheets.spreadsheets.values.append({
-    spreadsheetId: spreadsheet_id,
-    range: "333!A1",
-    valueInputOption: 'USER_ENTERED',
-    requestBody: {
-        values: rankings
+// const rankings = await webscraper.getRegionTop100("333", "0");
+
+async function uploadEventData(eventId, useAverage) {
+    const ranks = await webscraper.getRegionTop100(eventId, useAverage);
+
+    sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: spreadsheet_id,
+        requestBody: {
+            valueInputOption: 'RAW',
+            data: [
+                {
+                    range: `${eventId}!${useAverage==="0"?"A1:E":"F1:J"}${ranks.length}`,
+                    majorDimension: "ROWS",
+                    values: ranks
+                }
+            ]
+        }
+    }).then((res) => {
+        console.log(res.data);
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
+for (let i = 0; i < events.length; i++) {
+    await uploadEventData(events[i], "0");
+
+    if (events[i] != "333mbf") {
+        await uploadEventData(events[i], "1");
     }
-}).then((res) => {
-    console.log(res.data);
-}).catch((error) => {
-    console.log(error);
-});
-
-const rankings2 = await webscraper.getRegionTop100("333", "1");
-
-sheets.spreadsheets.values.append({
-    spreadsheetId: spreadsheet_id,
-    range: "333!F1",
-    valueInputOption: 'USER_ENTERED',
-    requestBody: {
-        values: rankings2
-    }
-}).then((res) => {
-    console.log(res.data);
-}).catch((error) => {
-    console.log(error);
-});
+}
 
 await webscraper.closeBrowser();
