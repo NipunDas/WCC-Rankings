@@ -1,9 +1,8 @@
 import React from "react";
-//import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Rankings from "./Rankings.js";
 
 function MyApp() {
-    /*
     return (
         <BrowserRouter basename="/WCC-Rankings">
             <Routes>
@@ -11,8 +10,6 @@ function MyApp() {
             </Routes>
         </BrowserRouter>
     );
-    */
-   return <Rankings />;
 }
 
 export default MyApp;

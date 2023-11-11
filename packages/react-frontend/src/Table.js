@@ -1,8 +1,5 @@
 import React, {useState, useEffect} from "react";
-//import {useParams} from "react-router-dom";
-//import dotenv from "dotenv";
-
-//dotenv.config();
+import {useParams} from "react-router-dom";
 
 const api_base_url = "https://sheets.googleapis.com";
 const spreadsheet_id = "1GFo7S0OJUK92RX4D-_0enm7umfCWVYT3TKrtb4YNUI4";
@@ -29,10 +26,10 @@ function TableHeader() {
 
 function TableBody() {
     const [rows, setRows] = useState([]);
-    //let params = useParams();
+    let params = useParams();
 
     useEffect(() => {
-        getSpreadsheet("333", "1")
+        getSpreadsheet(params.event, params.average)
         .then((res) => res.json())
         .then((json) => json.values)
         .then((ranks) => {
@@ -49,7 +46,7 @@ function TableBody() {
                 );
             }));
         }).catch((error) => { console.log(error); });
-    }, []);
+    }, [params.event, params.average]);
 
     return (
         <tbody>
