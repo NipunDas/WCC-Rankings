@@ -6,10 +6,11 @@ import React, {useState, useEffect} from "react";
 
 const api_base_url = "https://sheets.googleapis.com";
 const spreadsheet_id = "1GFo7S0OJUK92RX4D-_0enm7umfCWVYT3TKrtb4YNUI4";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function getSpreadsheet(eventId, useAverage) {
     const range = `${eventId}!${useAverage==="0"?"A1:E100":"F1:J100"}`;
-    const promise = fetch(`${api_base_url}/v4/spreadsheets/${spreadsheet_id}/values/${range}?key=${process.env.REACT_APP_API_KEY}`);
+    const promise = fetch(`${api_base_url}/v4/spreadsheets/${spreadsheet_id}/values/${range}?key=${API_KEY}`);
     return promise;
 }
 
