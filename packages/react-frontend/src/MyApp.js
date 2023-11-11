@@ -4,10 +4,9 @@ import Rankings from "./Rankings.js";
 
 function MyApp() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/WCC-Rankings">
             <Routes>
-                <Route></Route>
-                <Route path="/rankings/:event/:average" element={<Rankings/>}></Route>
+                <Route path="/rankings/:event/:average" element={<Rankings/>} />
             </Routes>
         </BrowserRouter>
     );
