@@ -1,7 +1,6 @@
 {
   "name": "react-frontend",
   "version": "0.1.0",
-  "homepage": "https://nipundas.github.io/WCC-Rankings/",
   "private": true,
   "type": "module",
   "dependencies": {
