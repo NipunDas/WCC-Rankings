@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-import api_key from "./config.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const api_base_url = "https://sheets.googleapis.com";
 const spreadsheet_id = "1GFo7S0OJUK92RX4D-_0enm7umfCWVYT3TKrtb4YNUI4";
 
 function getSpreadsheet(eventId, useAverage) {
     const range = `${eventId}!${useAverage==="0"?"A1:E100":"F1:J100"}`;
-    const promise = fetch(`${api_base_url}/v4/spreadsheets/${spreadsheet_id}/values/${range}?key=${api_key}`);
+    const promise = fetch(`${api_base_url}/v4/spreadsheets/${spreadsheet_id}/values/${range}?key=${process.env.REACT_APP_API_KEY}`);
     return promise;
 }
 
