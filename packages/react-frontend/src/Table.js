@@ -29,7 +29,15 @@ function TableBody() {
     let params = useParams();
 
     useEffect(() => {
-        getSpreadsheet(params.event, params.average)
+        let eventId = params.event;
+        let useAverage = params.average;
+        if (!eventId) {
+            eventId = "333";
+        }
+        if (!useAverage || eventId === "333mbf") {
+            useAverage= "0";
+        }
+        getSpreadsheet(eventId, useAverage)
         .then((res) => res.json())
         .then((json) => json.values)
         .then((ranks) => {

@@ -6,7 +6,7 @@ function MyApp() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/rankings/:event/:average" element={<Rankings/>} />
+                <Route path="/rankings/:event?/:average?" element={<Rankings/>} />
             </Routes>
         </BrowserRouter>
     );
