@@ -1,5 +1,5 @@
-/node_modules
 /packages/backend/oauth2.keys.json
 .env
 jsconfig.json
 .vscode
+node_modules
