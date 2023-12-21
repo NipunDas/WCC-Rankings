@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
-import { useParams } from "react-router-dom";
 
 const api_base_url = "https://sheets.googleapis.com";
 const spreadsheet_id = "1GFo7S0OJUK92RX4D-_0enm7umfCWVYT3TKrtb4YNUI4";
@@ -28,22 +27,13 @@ function TableHeader() {
     );
 }
 
-function TableBody() {
+function TableBody(props) {
     const [rows, setRows] = useState(null);
-    let params = useParams();
 
     useEffect(() => {
         setRows(null);
-        let eventId = params.event;
-        let useAverage = params.average;
-        if (!eventId) {
-            eventId = "333";
-        }
-        if (!useAverage) {
-            useAverage = "0";
-        }
 
-        getSpreadsheet(eventId, useAverage)
+        getSpreadsheet(props.event, props.useAverage)
             .then((res) => res.json())
             .then((json) => json.values)
             .then((ranks) => {
@@ -71,19 +61,20 @@ function TableBody() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [params.event, params.average]);
+    }, [props.event, props.useAverage]);
 
     if (rows === null) {
         return <Spinner animation="border" variant="primary" />;
+    } else {
+        return <tbody>{rows}</tbody>;
     }
-    return <tbody>{rows}</tbody>;
 }
 
-function RankingTable() {
+function RankingTable(props) {
     return (
         <Table>
             <TableHeader />
-            <TableBody />
+            <TableBody event={props.event} useAverage={props.useAverage} />
         </Table>
     );
 }
