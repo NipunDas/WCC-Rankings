@@ -207,11 +207,9 @@ function findBestResult(resArray, isMulti) {
 // Only run this code if this module is called directly
 if (esMain(import.meta)) {
     await openBrowser();
-    const result = await getRegionTop100("555bf", "0");
+    const result = await getRegionTop100("333", "0");
     console.log(result);
     await closeBrowser();
-
-    //console.log(findBestResult(["62/65 57:47", "14/14 59:48", "13/14 53:47"], true));
 }
 
 export default { getRegionTop100, openBrowser, closeBrowser };

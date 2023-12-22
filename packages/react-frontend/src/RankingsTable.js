@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
-
-const api_base_url = "https://sheets.googleapis.com";
-const spreadsheet_id = "1GFo7S0OJUK92RX4D-_0enm7umfCWVYT3TKrtb4YNUI4";
-const API_KEY = process.env.REACT_APP_API_KEY;
-
-function getSpreadsheet(eventId, useAverage) {
-    const range = `${eventId}!${useAverage === "0" ? "A1:E100" : "F1:J100"}`;
-    const promise = fetch(
-        `${api_base_url}/v4/spreadsheets/${spreadsheet_id}/values/${range}?key=${API_KEY}`
-    );
-    return promise;
-}
+import Utils from "./Utils.js";
 
 function TableHeader() {
     return (
@@ -20,7 +9,7 @@ function TableHeader() {
             <tr>
                 <th>Rank</th>
                 <th>Name</th>
-                <th>Time</th>
+                <th>Result</th>
                 <th>State</th>
             </tr>
         </thead>
@@ -32,8 +21,11 @@ function TableBody(props) {
 
     useEffect(() => {
         setRows(null);
-
-        getSpreadsheet(props.event, props.useAverage)
+        const range = `${props.event}!${
+            props.useAverage === "0" ? "A1:E100" : "F1:J100"
+        }`;
+        console.log(range);
+        Utils.getSpreadsheet(range)
             .then((res) => res.json())
             .then((json) => json.values)
             .then((ranks) => {

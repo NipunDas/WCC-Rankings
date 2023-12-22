@@ -1,7 +1,6 @@
 import React from "react";
 import MyApp from "./MyApp.js";
 import ReactDOMClient from "react-dom/client";
-//import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Creating the container
